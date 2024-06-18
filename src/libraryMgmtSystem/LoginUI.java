@@ -1,5 +1,7 @@
 package libraryMgmtSystem;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -20,21 +22,26 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 public class LoginUI{
 	JTextField userNameField;
 	JTextField passwordField;
 	public LoginUI() {
-		JFrame jf = new JFrame(" login module ");
+		JFrame jf = new JFrame("Sign In");
 		JPanel jp = new JPanel();
 		
-		GridLayout gl = new GridLayout(4,2,10,10);
 		
-		FlowLayout fl = new FlowLayout();
+		BorderLayout mainLayout = new BorderLayout();
+		GridLayout gl = new GridLayout(2,2,10,10);
+		JPanel formPanel = new JPanel(gl);
+		FlowLayout buttonGrpLayout = new FlowLayout(FlowLayout.CENTER, 20, 20);
+		JPanel actionPanel = new JPanel(buttonGrpLayout);
 		
-		jf.setLayout(fl);
 		
-		jp.setLayout(gl);
+		jf.setLocationRelativeTo(null);
+		
+		jp.setLayout(mainLayout);
 		
 		 
 		//creating components	
@@ -44,42 +51,40 @@ public class LoginUI{
 		passwordField = new JPasswordField(10);
 		
 		
-		JComboBox combo = new JComboBox();
-		combo.addItem("BBA");
-		combo.addItem("BBABI");
-		combo.addItem("BBATT");
-		combo.addItem("BCIS");
-		
-		JButton signBtn=new JButton("sign in");
+		JButton signBtn=new JButton("Sign in");
+		JButton cancelBtn = new JButton("Cancel");
 		JButton registerBtn=new JButton("Register");
 		
-		//not using setBounds()
-//		jl.setBounds(10, 10, 190, 30);
-//		userNameField.setBounds(200, 10, 150, 30);
-//		jl3.setBounds(10, 40, 190, 30);	
-//		passwordField.setBounds(200, 40, 150, 30);
-//		signBtn.setBounds(10,90,170,30);
-//		registerBtn.setBounds(200,90,170,30);
 		
-		//however setting size is important
-		jl.setSize(190, 30); //user name 
-		jl.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-		userNameField.setSize(150, 30);
-		jl3.setSize(190, 30);//password
-		passwordField.setSize(150, 30);
-		signBtn.setSize(170,30);
-		registerBtn.setSize(170,30);
+		JPanel btnGrpPanel = new JPanel(buttonGrpLayout);
+		
+		btnGrpPanel.add(signBtn);
+		btnGrpPanel.add(cancelBtn);
+		btnGrpPanel.add(registerBtn);
+		
+		
+		cancelBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				jf.dispose();
+			}
+		});
 		
 		
 		
 		//while adding components to container order is important
-		jp.add(jl); //label username [0,0] (row,column) position
-		jp.add(userNameField); //textfield username [0,1] (row,column) position
-		jp.add(jl3);//label password [1,0] (row,column) position
-		jp.add(passwordField);  //textfield password [1,1] (row,column) position
-		jp.add(signBtn);  //label password [2,0] (row,column) position
-		jp.add(registerBtn); //label password [2,2] (row,column) position
-		//jp.add(combo);
+		formPanel.add(jl); //label username [0,0] (row,column) position
+		formPanel.add(userNameField); //textfield username [0,1] (row,column) position
+		formPanel.add(jl3);//label password [1,0] (row,column) position
+		formPanel.add(passwordField);  //textfield password [1,1] (row,column) position
+		
+		actionPanel.add(btnGrpPanel);
+		
+		formPanel.setPreferredSize(new Dimension(400, 80));
+		
+		jp.add(formPanel, BorderLayout.NORTH);
+		jp.add(actionPanel, BorderLayout.CENTER);
+		jp.setBorder(new EmptyBorder(10, 10, 10, 10));
+		actionPanel.setPreferredSize(new Dimension(400, 50));
 		
 	
 		
@@ -156,7 +161,7 @@ public class LoginUI{
 		
 		//jf.pack();
 		jf.setContentPane(jp);
-		jf.setSize(400,160); //setting size of the from to be displayed
+		jf.setSize(new Dimension(400, 220)); //setting size of the from to be displayed
 		jf.setVisible(true); //enabling the jframe to be displayed
 		
 	}
